@@ -32,7 +32,7 @@ const Home = ({ topRated }: Props) => {
       <main className="py-4">
         <div
           className="mx-auto
-          max-w-md
+          max-w-[400px]
           sm:max-w-lg
           md:max-w-2x
           lg:max-w-3xl "
