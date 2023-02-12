@@ -6,7 +6,7 @@ interface Props {
   id: number;
   title: string;
   popularity: number;
-  outDate: any;
+  outDate: string;
   imgBackdrop: string;
 }
 
@@ -20,6 +20,7 @@ const Movies = (props: Props) => {
             alt={props.title}
             fill
             className=" object-cover rounded-md"
+            sizes="720"
           />
         </div>
       </div>

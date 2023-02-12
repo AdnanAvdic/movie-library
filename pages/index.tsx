@@ -21,7 +21,10 @@ const Home = ({ topRated }: Props) => {
       if (selectedOption === "name") {
         return a.title.localeCompare(b.title);
       } else if (selectedOption === "year") {
-        return new Date(b.release_date) - new Date(a.release_date);
+        const aDate = new Date(a.release_date);
+        const bDate = new Date(b.release_date);
+        console.log(typeof bDate);
+        return bDate.getTime() - aDate.getTime();
       } else {
         return 0;
       }
