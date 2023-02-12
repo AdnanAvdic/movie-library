@@ -20,7 +20,7 @@ const Movie = ({ data }: Props) => {
 
       <div
         className="flex flex-col justify-center mx-auto py-4
-        max-w-[400px]
+        max-w-[380px]
       sm:max-w-lg
       md:max-w-2x
       lg:max-w-3xl"

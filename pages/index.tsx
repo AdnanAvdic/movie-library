@@ -9,16 +9,23 @@ interface Props {
   topRated: Movie[];
 }
 
-interface PageProps {
-  topRated: Genre[];
-}
-
 const Home = ({ topRated }: Props) => {
   const [searchQuery, setSearchQuery] = useState("");
+  const [selectedOption, setSelectedOption] = useState("");
 
-  const filteredTopRated = topRated.filter((movie) =>
-    movie.title.toLowerCase().includes(searchQuery.toLowerCase())
-  );
+  const filteredTopRated = topRated
+    .filter((movie) =>
+      movie.title.toLowerCase().includes(searchQuery.toLowerCase())
+    )
+    .sort((a, b) => {
+      if (selectedOption === "name") {
+        return a.title.localeCompare(b.title);
+      } else if (selectedOption === "year") {
+        return new Date(b.release_date) - new Date(a.release_date);
+      } else {
+        return 0;
+      }
+    });
 
   return (
     <>
@@ -32,17 +39,39 @@ const Home = ({ topRated }: Props) => {
       <main className="py-4">
         <div
           className="mx-auto
-          max-w-[400px]
+          max-w-[380px]
           sm:max-w-lg
           md:max-w-2x
           lg:max-w-3xl "
         >
-          <input
-            className="border-[2px] border-blue-600 border-solid rounded-full p-3 w-full my-4"
-            placeholder="Search by name..."
-            value={searchQuery}
-            onChange={(event) => setSearchQuery(event.target.value)}
-          />
+          <div className=" flex items-center space-x-3">
+            <input
+              className="border-[2px] border-blue-600 border-solid rounded-full p-3 w-[80%] my-4"
+              placeholder="Search by name..."
+              value={searchQuery}
+              onChange={(event) => setSearchQuery(event.target.value)}
+            />
+
+            <select
+              value={selectedOption}
+              onChange={(event) => setSelectedOption(event.target.value)}
+            >
+              <option value="default">Default</option>
+              <option value="name">Name</option>
+              <option value="year">Year</option>
+            </select>
+          </div>
+
+          <div className=" py-4">
+            <ul className=" flex flex-row space-x-12 overflow-auto pb-3">
+              <li>Comedy</li>
+              <li>Action</li>
+              <li>Drama</li>
+              <li>Horror</li>
+              <li>Thriller</li>
+              <li>Documentary</li>
+            </ul>
+          </div>
 
           {filteredTopRated.map((item) => (
             <Movies
