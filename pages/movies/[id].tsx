@@ -2,6 +2,8 @@ import Header from "../../components/Header";
 import { Movie } from "../../typings";
 import Image from "next/image";
 import { baseUrl } from "../../constants/movieImage";
+import Head from "next/head";
+import { useState } from "react";
 
 interface PageId {
   params: {
@@ -14,8 +16,32 @@ interface Props {
 }
 
 const Movie = ({ data }: Props) => {
+  const [isFavorite, setIsFavorite] = useState(false);
+
+  const handleFavorite = () => {
+    setIsFavorite(!isFavorite);
+
+    const favoritesString = localStorage.getItem("favoriteMovies");
+
+    const favorites = favoritesString ? JSON.parse(favoritesString) : [];
+    const index = favorites.findIndex((item: any) => item.title === data.title);
+
+    if (isFavorite) {
+      favorites.splice(index, 1);
+    } else {
+      favorites.push(data);
+    }
+    localStorage.setItem("favoriteMovies", JSON.stringify(favorites));
+    localStorage.setItem("isFavorite", JSON.stringify(isFavorite));
+  };
+
   return (
     <section>
+      <Head>
+        <title>{data.title}</title>
+        <link rel="icon" href="/favicon.ico" />
+      </Head>
+
       <Header />
 
       <div
@@ -39,6 +65,18 @@ const Movie = ({ data }: Props) => {
 
         <div className=" py-4 text-sm">
           <p className="">{data.overview}</p>
+        </div>
+
+        <div
+          className="text-center bg-blue-400 text-white font-bold py-2 rounded-md 
+        w-full 
+        sm:w-[80%]
+        md:w-[60%]
+        lg:w-[40%]"
+        >
+          <button onClick={handleFavorite}>
+            {isFavorite ? "Remove from favorites" : "Add to favorites"}
+          </button>
         </div>
 
         <div className=" text-xs flex justify-between items-center py-6 font-semibold">
