@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import FavoriteMovies from "../components/FavoriteMovies";
 import Header from "../components/Header";
 import { baseUrl } from "../constants/movieImage";
@@ -10,14 +11,25 @@ interface FavoriteMovie {
 }
 
 const Favorites = () => {
-  let favoritesString = localStorage.getItem("favoriteMovies");
-  let favorites: FavoriteMovie[] = favoritesString
-    ? JSON.parse(favoritesString)
-    : [];
+  const [favoritesString, setFavoritesString] = useState(null);
 
-  if (!favoritesString) {
-    return null;
-  }
+  useEffect(
+    () =>
+      setFavoritesString(JSON.parse(localStorage.getItem("favoriteMovies")!)),
+    []
+  );
+  let favorites: FavoriteMovie[] = [];
+  if (favoritesString != null) favorites = favoritesString;
+
+  const removeFavoriteMovie = (item: FavoriteMovie) => {
+    const updatedFavoriteMovies = [...favorites].filter(
+      (movie) => movie.id !== item.id
+    );
+    const parseFavoriteMovies = JSON.stringify(updatedFavoriteMovies);
+
+    setFavoritesString(JSON.parse(parseFavoriteMovies));
+    localStorage.setItem("favoriteMovies", JSON.stringify(favoritesString));
+  };
 
   return (
     <section>
@@ -44,6 +56,7 @@ const Favorites = () => {
                   imgBackdrop={`${baseUrl}${
                     item.backdrop_path || item.poster_path
                   }`}
+                  // onRemove={removeFavoriteMovie(item)}
                 />
               ))}
             </div>

@@ -2,7 +2,7 @@ import Head from "next/head";
 import { useState } from "react";
 import Header from "../components/Header";
 import Movies from "../components/Movies";
-import { Genre, Movie } from "../typings";
+import { Movie } from "../typings";
 import requests from "../utils/requests";
 
 interface Props {
@@ -83,7 +83,7 @@ const Home = ({ topRated }: Props) => {
                 popularity={item.popularity}
                 outDate={item.release_date}
                 imgBackdrop={`${item?.backdrop_path || item?.poster_path}`}
-                // genres={genreNames}
+                genreIds={item.genre_ids}
               />
             );
           })}

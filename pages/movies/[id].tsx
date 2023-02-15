@@ -3,7 +3,7 @@ import { Genre, Movie } from "../../typings";
 import Image from "next/image";
 import { baseUrl } from "../../constants/movieImage";
 import Head from "next/head";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 interface PageId {
   params: {
@@ -22,8 +22,11 @@ const Movie = ({ data }: Props) => {
   const handleFavorite = () => {
     setIsFavorite(!isFavorite);
 
+    window.localStorage.setItem("isActive", JSON.stringify(!isFavorite));
+
     const favoritesString = localStorage.getItem("favoriteMovies");
     const favorites = favoritesString ? JSON.parse(favoritesString) : [];
+
     const index = favorites.findIndex((item: any) => item.title === data.title);
 
     if (isFavorite) {
@@ -33,6 +36,11 @@ const Movie = ({ data }: Props) => {
     }
     localStorage.setItem("favoriteMovies", JSON.stringify(favorites));
   };
+
+  useEffect(
+    () => setIsFavorite(JSON.parse(localStorage.getItem("isActive")!)),
+    []
+  );
 
   //Getting genres from data object
   const genre: Genre[] = data.genres;

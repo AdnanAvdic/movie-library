@@ -9,10 +9,14 @@ interface MovieProps {
   popularity: number;
   outDate: string;
   imgBackdrop: string;
+  genreIds: number[];
   // genres: any;
 }
 
 const Movies = (props: MovieProps) => {
+  // const genreNames = props.genreIds.map((item) => {
+  //   item = "action";
+  // })
   return (
     <div className="rounded-2xl mb-5 p-3 grid grid-cols-2 border-[2px] border-blue-600 border-solid ">
       <div>
@@ -32,7 +36,7 @@ const Movies = (props: MovieProps) => {
           <h2 className="font-bold lg:text-4xl">{props.title}</h2>
           <h3 className=" mt-3 text-sm">Watched {props.popularity} times</h3>
           <h3 className="text-sm ">Release date: {props.outDate}</h3>
-          {/* <h3 className="text-sm ">Genre: {props.genres}</h3> */}
+          <h3 className="text-sm ">Genres: {props.genreIds}</h3>
         </div>
 
         <div className="cursor-pointer hover:scale-105 ease-in-out transition transform">
