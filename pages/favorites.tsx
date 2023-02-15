@@ -21,6 +21,7 @@ const Favorites = () => {
   let favorites: FavoriteMovie[] = [];
   if (favoritesString != null) favorites = favoritesString;
 
+  //function removes a movie from favorites list
   const removeFavoriteMovie = (item: FavoriteMovie) => {
     const updatedFavoriteMovies = [...favorites].filter(
       (movie) => movie.id !== item.id
@@ -28,6 +29,7 @@ const Favorites = () => {
     const parseFavoriteMovies = JSON.stringify(updatedFavoriteMovies);
 
     setFavoritesString(JSON.parse(parseFavoriteMovies));
+
     localStorage.setItem("favoriteMovies", JSON.stringify(favoritesString));
   };
 
@@ -52,11 +54,12 @@ const Favorites = () => {
               {favorites.map((item) => (
                 <FavoriteMovies
                   key={item.id}
+                  id={item.id}
                   title={item.title}
                   imgBackdrop={`${baseUrl}${
                     item.backdrop_path || item.poster_path
                   }`}
-                  // onRemove={removeFavoriteMovie(item)}
+                  onRemove={() => removeFavoriteMovie(item)!}
                 />
               ))}
             </div>

@@ -76,12 +76,12 @@ const Movie = ({ data }: Props) => {
 
         <div className=" py-4 text-sm">
           <p className="">{data.overview}</p>
+          <p className="pt-4">Genre: {genreNames.join(", ")} </p>
         </div>
 
         <div className=" text-xs flex justify-between items-center py-6 font-semibold">
           <span>Watched {data.popularity} times</span>
           <span>Release date: {data.release_date}</span>
-          <span>Genre: {genreNames[0]} </span>
         </div>
       </div>
 
