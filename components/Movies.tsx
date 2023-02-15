@@ -1,16 +1,18 @@
 import Link from "next/link";
 import Image from "next/image";
 import { baseUrl } from "../constants/movieImage";
+import { Genre } from "../typings";
 
-interface Props {
+interface MovieProps {
   id: number;
   title: string;
   popularity: number;
   outDate: string;
   imgBackdrop: string;
+  // genres: any;
 }
 
-const Movies = (props: Props) => {
+const Movies = (props: MovieProps) => {
   return (
     <div className="rounded-2xl mb-5 p-3 grid grid-cols-2 border-[2px] border-blue-600 border-solid ">
       <div>
@@ -30,6 +32,7 @@ const Movies = (props: Props) => {
           <h2 className="font-bold lg:text-4xl">{props.title}</h2>
           <h3 className=" mt-3 text-sm">Watched {props.popularity} times</h3>
           <h3 className="text-sm ">Release date: {props.outDate}</h3>
+          {/* <h3 className="text-sm ">Genre: {props.genres}</h3> */}
         </div>
 
         <div className="cursor-pointer hover:scale-105 ease-in-out transition transform">

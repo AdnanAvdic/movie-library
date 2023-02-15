@@ -13,7 +13,7 @@ const Home = ({ topRated }: Props) => {
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedOption, setSelectedOption] = useState("");
 
-  const filteredTopRated = topRated
+  let filteredTopRated = topRated
     .filter((movie) =>
       movie.title.toLowerCase().includes(searchQuery.toLowerCase())
     )
@@ -23,7 +23,6 @@ const Home = ({ topRated }: Props) => {
       } else if (selectedOption === "year") {
         const aDate = new Date(a.release_date);
         const bDate = new Date(b.release_date);
-        console.log(typeof bDate);
         return bDate.getTime() - aDate.getTime();
       } else {
         return 0;
@@ -72,20 +71,22 @@ const Home = ({ topRated }: Props) => {
               <li>Drama</li>
               <li>Horror</li>
               <li>Thriller</li>
-              <li>Documentary</li>
             </ul>
           </div>
 
-          {filteredTopRated.map((item) => (
-            <Movies
-              key={item.title}
-              id={item.id}
-              title={item.title}
-              popularity={item.popularity}
-              outDate={item.release_date}
-              imgBackdrop={`${item?.backdrop_path || item?.poster_path}`}
-            />
-          ))}
+          {filteredTopRated.map((item) => {
+            return (
+              <Movies
+                key={item.title}
+                id={item.id}
+                title={item.title}
+                popularity={item.popularity}
+                outDate={item.release_date}
+                imgBackdrop={`${item?.backdrop_path || item?.poster_path}`}
+                // genres={genreNames}
+              />
+            );
+          })}
         </div>
       </main>
     </>

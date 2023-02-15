@@ -1,5 +1,5 @@
 import Header from "../../components/Header";
-import { Movie } from "../../typings";
+import { Genre, Movie } from "../../typings";
 import Image from "next/image";
 import { baseUrl } from "../../constants/movieImage";
 import Head from "next/head";
@@ -18,11 +18,11 @@ interface Props {
 const Movie = ({ data }: Props) => {
   const [isFavorite, setIsFavorite] = useState(false);
 
+  //Pushing favorite movie to localStorage
   const handleFavorite = () => {
     setIsFavorite(!isFavorite);
 
     const favoritesString = localStorage.getItem("favoriteMovies");
-
     const favorites = favoritesString ? JSON.parse(favoritesString) : [];
     const index = favorites.findIndex((item: any) => item.title === data.title);
 
@@ -32,8 +32,11 @@ const Movie = ({ data }: Props) => {
       favorites.push(data);
     }
     localStorage.setItem("favoriteMovies", JSON.stringify(favorites));
-    localStorage.setItem("isFavorite", JSON.stringify(isFavorite));
   };
+
+  //Getting genres from data object
+  const genre: Genre[] = data.genres;
+  const genreNames: string[] = genre.map((genre: Genre) => genre.name);
 
   return (
     <section>
@@ -67,22 +70,17 @@ const Movie = ({ data }: Props) => {
           <p className="">{data.overview}</p>
         </div>
 
-        <div
-          className="text-center bg-blue-400 text-white font-bold py-2 rounded-md 
-        w-full 
-        sm:w-[80%]
-        md:w-[60%]
-        lg:w-[40%]"
-        >
-          <button onClick={handleFavorite}>
-            {isFavorite ? "Remove from favorites" : "Add to favorites"}
-          </button>
-        </div>
-
         <div className=" text-xs flex justify-between items-center py-6 font-semibold">
           <span>Watched {data.popularity} times</span>
           <span>Release date: {data.release_date}</span>
+          <span>Genre: {genreNames[0]} </span>
         </div>
+      </div>
+
+      <div className=" text-center text-2xl font-bold">
+        <button onClick={handleFavorite}>
+          {!isFavorite ? "Favorite" : "Unfavorite"}
+        </button>
       </div>
     </section>
   );
