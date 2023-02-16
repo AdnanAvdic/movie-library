@@ -14,8 +14,14 @@ const Home = ({ topRated }: Props) => {
   const [selectedOption, setSelectedOption] = useState("");
 
   let filteredTopRated = topRated
-    .filter((movie) =>
-      movie.title.toLowerCase().includes(searchQuery.toLowerCase())
+    .filter(
+      (movie) =>
+        movie.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        movie.genre_ids.toString().includes(searchQuery.toLowerCase()) ||
+        new Date(movie.release_date)
+          .getFullYear()
+          .toString()
+          .includes(searchQuery.toLowerCase())
     )
     .sort((a, b) => {
       if (selectedOption === "name") {
@@ -49,7 +55,7 @@ const Home = ({ topRated }: Props) => {
           <div className=" flex items-center space-x-3">
             <input
               className="border-[2px] border-blue-600 border-solid rounded-full p-3 w-[80%] my-4"
-              placeholder="Search by name..."
+              placeholder="Search by name, year or genre..."
               value={searchQuery}
               onChange={(event) => setSearchQuery(event.target.value)}
             />
@@ -62,16 +68,6 @@ const Home = ({ topRated }: Props) => {
               <option value="name">Name</option>
               <option value="year">Year</option>
             </select>
-          </div>
-
-          <div className=" py-4">
-            <ul className=" flex flex-row space-x-12 overflow-auto pb-3">
-              <li>Comedy</li>
-              <li>Action</li>
-              <li>Drama</li>
-              <li>Horror</li>
-              <li>Thriller</li>
-            </ul>
           </div>
 
           {filteredTopRated.map((item) => {
