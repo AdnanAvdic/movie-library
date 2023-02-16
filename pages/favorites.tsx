@@ -30,7 +30,10 @@ const Favorites = () => {
 
     setFavoritesString(JSON.parse(parseFavoriteMovies));
 
-    localStorage.setItem("favoriteMovies", JSON.stringify(favoritesString));
+    localStorage.setItem(
+      "favoriteMovies",
+      JSON.stringify(updatedFavoriteMovies)
+    );
   };
 
   return (
