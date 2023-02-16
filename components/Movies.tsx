@@ -9,28 +9,7 @@ interface MovieProps {
   outDate: string;
   imgBackdrop: string;
   genreIds: number[];
-}
-
-enum Genres {
-  _28 = "Action",
-  _12 = "Adventure",
-  _16 = "Animation",
-  _35 = "Comedy",
-  _80 = "Crime",
-  _99 = "Documentary",
-  _18 = "Drama",
-  _10751 = "Family",
-  _14 = "Fantasy",
-  _36 = "History",
-  _27 = "Horror",
-  _10402 = "Music",
-  _9648 = "Mystery",
-  _10749 = "Romance",
-  _878 = "Science Fiction",
-  _10770 = "TV Movie",
-  _53 = "Thriller",
-  _10752 = "War",
-  _37 = "Western",
+  genreNames: string;
 }
 
 const Movies = (props: MovieProps) => {
@@ -53,6 +32,7 @@ const Movies = (props: MovieProps) => {
           <h2 className="font-bold lg:text-4xl">{props.title}</h2>
           <h3 className=" mt-3 text-xs">Watched {props.popularity} times</h3>
           <h3 className="text-xs ">Release date: {props.outDate}</h3>
+          <h3 className=" text-xs mt-3">Genres: {props.genreNames} </h3>
         </div>
 
         <div className="cursor-pointer hover:scale-105 ease-in-out transition transform mt-3">
