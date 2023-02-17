@@ -3,7 +3,7 @@ import { Genre, Movie } from "../../typings";
 import Image from "next/image";
 import { baseUrl } from "../../constants/movieImage";
 import Head from "next/head";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 
 interface PageId {
   params: {
