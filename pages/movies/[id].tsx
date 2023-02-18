@@ -72,16 +72,15 @@ const Movie = ({ data }: Props) => {
           <p className="pt-4">Genre: {genreNames.join(", ")} </p>
         </div>
 
-        <div className=" text-xs flex justify-between items-center py-6 font-semibold">
+        <div className=" text-md  flex justify-between items-center py-6 font-semibold">
           <span>Watched {data.popularity} times</span>
+          <div className=" text-center bg-blue-500 text-white font-bold py-2 px-4 rounded-md">
+            <button onClick={handleFavorite}>
+              {!isFavorite ? "Favorite" : "Unfavorite"}
+            </button>
+          </div>
           <span>Release date: {data.release_date}</span>
         </div>
-      </div>
-
-      <div className=" text-center text-2xl font-bold">
-        <button onClick={handleFavorite}>
-          {!isFavorite ? "Favorite" : "Unfavorite"}
-        </button>
       </div>
     </section>
   );

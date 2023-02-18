@@ -2,12 +2,16 @@ import { useEffect, useState } from "react";
 import FavoriteMovies from "../components/FavoriteMovies";
 import Header from "../components/Header";
 import { baseUrl } from "../constants/movieImage";
+import { Genre } from "../typings";
 
 interface FavoriteMovie {
   id: number;
   title: string;
   backdrop_path: string;
   poster_path: string;
+  popularity: number;
+  release_date: string;
+  genre: Genre;
 }
 
 const Favorites = () => {
@@ -63,6 +67,8 @@ const Favorites = () => {
                     item.backdrop_path || item.poster_path
                   }`}
                   onRemove={() => removeFavoriteMovie(item)!}
+                  popularity={item.popularity}
+                  outDate={item.release_date}
                 />
               ))}
             </div>

@@ -30,9 +30,15 @@ const Movies = (props: MovieProps) => {
       <div className="flex flex-col justify-between ">
         <div>
           <h2 className="font-bold lg:text-4xl">{props.title}</h2>
-          <h3 className=" mt-3 text-xs">Watched {props.popularity} times</h3>
-          <h3 className="text-xs ">Release date: {props.outDate}</h3>
-          <h3 className=" text-xs mt-3">Genres: {props.genreNames} </h3>
+          <h3 className=" mt-3 text-xs md:text-lg font-semibold">
+            Watched {props.popularity} times
+          </h3>
+          <h3 className="text-xs md:text-lg font-semibold ">
+            Release date: {props.outDate}
+          </h3>
+          <h3 className=" text-xs md:text-lg font-semibold mt-3">
+            Genres: {props.genreNames}{" "}
+          </h3>
         </div>
 
         <div className="cursor-pointer hover:scale-105 ease-in-out transition transform mt-3">
