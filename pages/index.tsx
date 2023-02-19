@@ -1,9 +1,8 @@
 import Head from "next/head";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Header from "../components/Header";
 import Movies from "../components/Movies";
 import { Movie } from "../typings";
-import requests from "../utils/requests";
 
 interface Props {
   topRated: Movie[];
@@ -12,13 +11,33 @@ interface Props {
 const Home = ({ topRated }: Props) => {
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedOption, setSelectedOption] = useState("");
+  const [currentPage, setCurrentPage] = useState(1);
+  const [allMovies, setAllMovies] = useState(topRated);
 
-  for (let i = 0; i < topRated.length; i++) {
-    let genreNames = getGenresFromIds(topRated[i].genre_ids);
-    topRated[i].genre_names = genreNames;
+  //fetching more movies on when scrolling
+
+  useEffect(() => {
+    window.onscroll = async () => {
+      if (window.innerHeight + window.scrollY >= document.body.offsetHeight) {
+        const nextPage = currentPage + 1;
+        const res = await fetch(
+          `https://api.themoviedb.org/3/movie/top_rated?api_key=${process.env.NEXT_PUBLIC_API_KEY}&language=en-US&page=${nextPage}`
+        );
+        const data = await res.json();
+        setAllMovies([...allMovies, ...data.results]);
+        setCurrentPage(nextPage);
+      }
+    };
+  });
+
+  //formatting genre id's to genre names from hashmap
+  for (let i = 0; i < allMovies.length; i++) {
+    let genreNames = getGenresFromIds(allMovies[i].genre_ids);
+    allMovies[i].genre_names = genreNames;
   }
 
-  let filteredTopRated = topRated
+  //filtering movies
+  let filteredTopRated = allMovies
     .filter(
       (movie) =>
         movie.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
@@ -127,8 +146,12 @@ const getGenresFromIds = (array: number[]) => {
   return genre.join(", ");
 };
 
-export const getServerSideProps = async () => {
-  const res = await fetch(requests.fetchTopRated);
+export const getServerSideProps = async (query: any) => {
+  const pageParam = query.pageParam || 1;
+  const res = await fetch(
+    `https://api.themoviedb.org/3/movie/top_rated?api_key=${process.env.NEXT_PUBLIC_API_KEY}&language=en-US&page=${pageParam}`
+  );
+
   const topRated = await res.json();
   return { props: { topRated: topRated.results } };
 };
