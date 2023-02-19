@@ -18,7 +18,11 @@ const Home = ({ topRated }: Props) => {
 
   useEffect(() => {
     window.onscroll = async () => {
-      if (window.innerHeight + window.scrollY >= document.body.offsetHeight) {
+      const bottom =
+        Math.ceil(window.innerHeight + window.scrollY) >=
+        document.documentElement.scrollHeight;
+
+      if (bottom) {
         const nextPage = currentPage + 1;
         const res = await fetch(
           `https://api.themoviedb.org/3/movie/top_rated?api_key=${process.env.NEXT_PUBLIC_API_KEY}&language=en-US&page=${nextPage}`
@@ -28,7 +32,7 @@ const Home = ({ topRated }: Props) => {
         setCurrentPage(nextPage);
       }
     };
-  });
+  }, [allMovies]);
 
   //formatting genre id's to genre names from hashmap
   for (let i = 0; i < allMovies.length; i++) {
