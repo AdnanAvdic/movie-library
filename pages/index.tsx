@@ -32,7 +32,7 @@ const Home = ({ topRated }: Props) => {
         setCurrentPage(nextPage);
       }
     };
-  }, [allMovies]);
+  }, [allMovies, currentPage]);
 
   //formatting genre id's to genre names from hashmap
   for (let i = 0; i < allMovies.length; i++) {
